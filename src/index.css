@@ -1,0 +1,383 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Dark industrial base — carbon/graphite tones */
+  --base: #0A0E14;
+  --base-elevated: #12171F;
+  --base-panel: #1A2029;
+  --base-hover: #212934;
+
+  /* Warm off-white text — never pure white */
+  --text: #F0EEE9;
+  --text-soft: #C8C5BE;
+  --text-muted: #8B8880;
+  --text-faded: #5A5850;
+
+  /* Experience POWER accent system */
+  --red: #E41824;
+  --red-bright: #FF2937;
+  --red-deep: #A31219;
+  --red-soft: rgba(228, 24, 36, 0.15);
+
+  --teal: #3CA8B4;
+  --teal-bright: #4FC0CC;
+  --teal-deep: #1F7A85;
+  --green: #48B490;
+  --green-bright: #5CCFA5;
+  --green-deep: #2A7A5F;
+
+  /* Rules & borders — subtle */
+  --rule: rgba(255, 255, 255, 0.06);
+  --rule-strong: rgba(255, 255, 255, 0.12);
+  --rule-red: rgba(228, 24, 36, 0.25);
+  --rule-teal: rgba(60, 168, 180, 0.25);
+
+  /* Grid tint */
+  --grid-line: rgba(60, 168, 180, 0.04);
+  --grid-line-major: rgba(60, 168, 180, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; min-height: 100%; }
+
+body {
+  background: var(--base);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Layer 1: subtle power-grid schematic — dots at intersections */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-line-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 128px 128px, 128px 128px, 32px 32px, 32px 32px;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+/* Layer 2: ambient control-room lighting */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    /* Top-center teal illumination — the power button light */
+    radial-gradient(ellipse 1000px 500px at 50% -150px, rgba(60, 168, 180, 0.10), transparent 60%),
+    /* Upper right red warmth */
+    radial-gradient(ellipse 600px 400px at 92% 10%, rgba(228, 24, 36, 0.06), transparent 70%),
+    /* Lower left green depth */
+    radial-gradient(ellipse 700px 500px at 8% 95%, rgba(72, 180, 144, 0.04), transparent 70%),
+    /* Fine noise texture — carbon fiber feel */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: screen;
+}
+
+#root { position: relative; z-index: 1; min-height: 100vh; }
+
+/* Typography — Space Grotesk for display (technical, precise) */
+.display {
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.display-heavy {
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.mono { font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace; }
+
+/* Glass panels — dark translucent */
+.glass-panel {
+  background: rgba(26, 32, 41, 0.75);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+
+.glass-panel-strong {
+  background: rgba(26, 32, 41, 0.92);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+}
+
+input, textarea, select {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+  transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text) !important;
+  background: rgba(10, 14, 20, 0.6) !important;
+  border-color: var(--rule-strong) !important;
+}
+input::placeholder, textarea::placeholder { color: var(--text-faded); }
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--teal) !important;
+  box-shadow:
+    0 0 0 3px rgba(60, 168, 180, 0.18),
+    inset 0 1px 3px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(60, 168, 180, 0.15);
+  background: rgba(10, 14, 20, 0.9) !important;
+}
+button {
+  font-family: 'Inter', -apple-system, sans-serif;
+  cursor: pointer;
+  transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--text);
+}
+button:disabled { cursor: not-allowed; }
+
+::-webkit-scrollbar { width: 14px; height: 14px; }
+::-webkit-scrollbar-track { background: var(--base-elevated); }
+::-webkit-scrollbar-thumb {
+  background: var(--base-hover);
+  border-radius: 7px;
+  border: 3px solid var(--base-elevated);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--teal-deep); }
+
+::selection { background: var(--teal-deep); color: var(--text); }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Illuminated element animation for the power button */
+@keyframes pulse-teal {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+.pulse-teal { animation: pulse-teal 3s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PRINT STYLES — Cmd/Ctrl+P produces a clean document
+   ═══════════════════════════════════════════════════════════════ */
+
+@media print {
+  /* Reset the entire visual system for paper */
+  @page {
+    size: letter;
+    margin: 0.75in 0.65in;
+  }
+
+  html, body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt !important;
+    line-height: 1.55 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Kill all the atmospheric layers */
+  body::before, body::after { display: none !important; }
+  #root { min-height: 0 !important; }
+
+  /* Hide everything by default; explicitly show what should print */
+  .no-print,
+  header,
+  .app-header,
+  nav,
+  button,
+  .mode-title-row,
+  .breadcrumb,
+  .input-card,
+  .context-panel,
+  .tip-callout,
+  .history-panel,
+  .recent-outputs-panel,
+  input, textarea, select {
+    display: none !important;
+  }
+
+  /* The output card is what we actually print */
+  .print-target {
+    display: block !important;
+    background: white !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    position: static !important;
+  }
+
+  .print-target * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+  }
+
+  /* Kill corner brackets and decorative pseudo-elements */
+  .print-target *::before,
+  .print-target *::after {
+    display: none !important;
+  }
+
+  /* Print header block — inserted at top of printed output */
+  .print-header {
+    display: block !important;
+    padding-bottom: 12pt !important;
+    margin-bottom: 20pt !important;
+    border-bottom: 2pt solid black !important;
+  }
+  .print-header .print-brand {
+    font-family: 'Space Grotesk', 'Fraunces', Georgia, serif;
+    font-weight: 700 !important;
+    font-size: 10pt !important;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: black !important;
+    margin-bottom: 4pt;
+  }
+  .print-header .print-title {
+    font-family: 'Space Grotesk', 'Fraunces', Georgia, serif;
+    font-weight: 700 !important;
+    font-size: 22pt !important;
+    line-height: 1.15 !important;
+    margin: 0 0 8pt 0 !important;
+    color: black !important;
+  }
+  .print-header .print-meta {
+    font-size: 10pt !important;
+    color: #444 !important;
+    line-height: 1.5;
+  }
+  .print-header .print-meta strong {
+    color: black !important;
+    font-weight: 600;
+  }
+
+  /* Body typography — serif for reading comfort */
+  .print-target p,
+  .print-target li {
+    font-family: 'Georgia', 'Times New Roman', serif !important;
+    font-size: 11pt !important;
+    line-height: 1.6 !important;
+    color: black !important;
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Section headers — never split from their content */
+  .print-target h1,
+  .print-target h2,
+  .print-target h3,
+  .print-target h4 {
+    font-family: 'Space Grotesk', 'Helvetica', sans-serif !important;
+    color: black !important;
+    page-break-after: avoid;
+    break-after: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .print-target h1 { font-size: 18pt !important; margin: 20pt 0 8pt 0 !important; }
+  .print-target h2 { font-size: 14pt !important; margin: 18pt 0 6pt 0 !important; }
+  .print-target h3 { font-size: 12pt !important; margin: 14pt 0 6pt 0 !important; }
+
+  /* Section markers rendered by MarkdownOutput */
+  .print-section-marker {
+    display: block !important;
+    page-break-after: avoid;
+    break-after: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border-top: 1pt solid black !important;
+    padding-top: 8pt !important;
+    margin-top: 16pt !important;
+    margin-bottom: 8pt !important;
+  }
+  .print-section-marker-label {
+    font-family: 'Space Grotesk', 'Helvetica', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 9pt !important;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #666 !important;
+    margin-bottom: 3pt;
+  }
+  .print-section-marker-title {
+    font-family: 'Space Grotesk', 'Helvetica', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 14pt !important;
+    color: black !important;
+  }
+
+  /* Lists */
+  .print-target ol, .print-target ul {
+    margin: 8pt 0 12pt 0 !important;
+    padding-left: 22pt !important;
+  }
+  .print-target li {
+    margin-bottom: 6pt !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .print-target li strong { font-weight: 700 !important; color: black !important; }
+
+  /* Paragraphs */
+  .print-target p {
+    margin: 0 0 10pt 0 !important;
+  }
+  .print-target p strong { font-weight: 700 !important; color: black !important; }
+
+  /* Quote blocks — printed with a left rule */
+  .print-target blockquote,
+  .print-quote {
+    border-left: 2pt solid black !important;
+    padding-left: 12pt !important;
+    margin: 10pt 0 12pt 0 !important;
+    font-style: italic;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Print footer note — bottom of every printed page */
+  .print-footer {
+    display: block !important;
+    margin-top: 24pt !important;
+    padding-top: 8pt !important;
+    border-top: 1pt solid #999 !important;
+    font-size: 9pt !important;
+    color: #666 !important;
+    font-family: 'Space Grotesk', 'Helvetica', sans-serif !important;
+  }
+
+  /* Avoid awkward single-line orphans across pages */
+  .print-target > * {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
+/* When NOT printing, hide the print-only header/footer blocks entirely */
+.print-header, .print-footer, .print-section-marker {
+  display: none;
+}
