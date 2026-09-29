@@ -5,9 +5,8 @@
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
-  "functions": {
-    "api/claude.mjs": {
-      "maxDuration": 300
-    }
-  }
-}
+    "functions": {
+     "api/**": {
+       "maxDuration": 300
+     }
+   }
